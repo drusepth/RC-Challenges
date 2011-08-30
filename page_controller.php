@@ -32,11 +32,34 @@ class PageController {
 
   function register() {
     echo $html->header('Rolla Coders: Challenges');
-    echo $html->subheader('Register an account');
+    
+    if (isset($_POST['fullname']) && isset($_POST['username']) && isset($_POST['password'])) {
+      // Process registration
+
+    } else {
+      echo $html->subheader('Register an account');
+      echo '<form method="post">';
+        echo 'Full Name: ', $html->input('fullname');
+        echo 'Username: ', $html->input('username');
+        echo 'Password: ', $html->password('password');
+        echo 'Confirm: ', $html->password('confirm');
+        echo $html->submit('Register');
+      echo '</form>';
+    }
   }
 
   function login() {
-
+    if (isset($_POST['username']) && isset($_POST['password'])) {
+      // Process login
+      
+    } else {
+      echo $html->header('Log in');
+      echo '<form method="post">';
+        echo 'Username: ', $html->input('username');
+        echo 'Password: ', $html->password('password');
+        echo $html->submit('Log in');
+      echo '</form>';
+    }
   }
 
   function challenges() {
