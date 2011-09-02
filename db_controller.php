@@ -16,7 +16,6 @@ class DbController {
     return mysql_query($string);
   }
 
-
 }
 
 ?>

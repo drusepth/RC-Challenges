@@ -70,13 +70,21 @@ class PageController {
     $challenges = $chal_controller->GetAll();
 
     while ($challenge = mysql_fetch_object($challenges)) {
-      echo $challenge->Name;
+      echo $this->html->link($challenge->Name, '?page=challenge&id=' . $challenge->ID);
     }
 
   }
 
   function challenge() {
+    if (!isset($_GET['id'])) {
+      $this->challenges();
+    } else {
+      $id = $_GET['id'] / 1;
+      $chal_controller = new ChallengeController();
+      $challenge = $chal_controller->Get($id);
 
+      echo $this->html->header($challenge->Name);
+    }
   }
 }
 
