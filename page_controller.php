@@ -1,10 +1,11 @@
 <?php
 
 require_once('html_controller.php');
-$html = new HtmlController();
+require_once('challenge_controller.php');
 
 class PageController {
   function __construct($page) {
+    $this->html = new HtmlController();
     $this->show($page);
   }
 
@@ -19,31 +20,31 @@ class PageController {
   }
 
   function home() {
-    echo $html->header('Rolla Coders: Challenges');
+    echo $this->html->header('Rolla Coders: Challenges');
     if ($logged_in) {
       // List all challenges for the user
       $this->challenges();
     } else {
       // Offer register/login links before presenting challenges
-      echo $html->link('Click here to register', '?page=register');
-      echo $html->link('Click here to log in', '?page=login');
+      echo $this->html->link('Click here to register', '?page=register');
+      echo $this->html->link('Click here to log in', '?page=login');
     }
   }
 
   function register() {
-    echo $html->header('Rolla Coders: Challenges');
+    echo $this->html->header('Rolla Coders: Challenges');
     
     if (isset($_POST['fullname']) && isset($_POST['username']) && isset($_POST['password'])) {
       // Process registration
 
     } else {
-      echo $html->subheader('Register an account');
+      echo $this->html->subheader('Register an account');
       echo '<form method="post">';
-        echo 'Full Name: ', $html->input('fullname');
-        echo 'Username: ', $html->input('username');
-        echo 'Password: ', $html->password('password');
-        echo 'Confirm: ', $html->password('confirm');
-        echo $html->submit('Register');
+        echo 'Full Name: ' . $this->html->input('fullname');
+        echo 'Username: ', $this->html->input('username');
+        echo 'Password: ', $this->html->password('password');
+        echo 'Confirm: ', $this->html->password('confirm');
+        echo $this->html->submit('Register');
       echo '</form>';
     }
   }
@@ -53,16 +54,24 @@ class PageController {
       // Process login
       
     } else {
-      echo $html->header('Log in');
+      echo $this->html->header('Log in');
       echo '<form method="post">';
-        echo 'Username: ', $html->input('username');
-        echo 'Password: ', $html->password('password');
-        echo $html->submit('Log in');
+        echo 'Username: ', $this->html->input('username');
+        echo 'Password: ', $this->html->password('password');
+        echo $this->html->submit('Log in');
       echo '</form>';
     }
   }
 
   function challenges() {
+    echo $this->html->header('Rolla Coders: Challenges');
+
+    $chal_controller = new ChallengeController();
+    $challenges = $chal_controller->GetAll();
+
+    while ($challenge = mysql_fetch_object($challenges)) {
+      echo $challenge->Name;
+    }
 
   }
 
