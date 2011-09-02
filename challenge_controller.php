@@ -14,8 +14,19 @@ class ChallengeController {
 
   function Get($id) {
     $challenge = $this->dbc->query("SELECT * FROM `challenges` WHERE `ID` = '$id' LIMIT 1"); // unsafe lololol
-
     return (mysql_num_rows($challenge) == 1 ? mysql_fetch_object($challenge) : null);
+  }
+
+  function Submit($id, $code) {
+    $challenge = $this->Get($id);
+    if ($challenge->ExpectedOutput == $code) {
+      // Success!
+      return true;
+
+    } else {
+      // Failure :(
+      return false;
+    }
   }
 
 }

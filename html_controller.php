@@ -10,6 +10,10 @@ class HtmlController {
     return '<h2>' . $text . '</h2>';
   }
 
+  function paragraph($text) {
+    return '<p>' . $text . '</p>';
+  }
+
   function link($text, $to) {
     return '<a href="' . $to . '">' . $text . '</a>';
   }
@@ -20,6 +24,10 @@ class HtmlController {
 
   function input($text) {
     return '<input type="text" name="' . $this->sanitize_for_name_tag($text) . '" value="" />';
+  }
+
+  function biginput($name) {
+    return '<textarea name="' . $name . '"></textarea>';
   }
 
   function password($text) {

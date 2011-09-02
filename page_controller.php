@@ -46,6 +46,7 @@ class PageController {
         return;
       }
 
+      // Ensure a unique username
       if (!$creator->valid_username($_POST['username'])) {
         echo $this->html->error("Username is taken!");
         return;
@@ -96,11 +97,34 @@ class PageController {
     if (!isset($_GET['id'])) {
       $this->challenges();
     } else {
+
       $id = $_GET['id'] / 1;
       $chal_controller = new ChallengeController();
       $challenge = $chal_controller->Get($id);
 
       echo $this->html->header($challenge->Name);
+
+      if (isset($_POST['code'])) {
+
+        $code = $_POST['code'];
+        if ($chal_controller->Submit($id, $code)) {
+          echo $this->html->subheader("Success");
+        } else {
+          echo $this->html->subheader("Failure");
+        }
+
+      } else {
+
+        echo $this->html->subheader($challenge->Difficulty);
+        echo $this->html->paragraph($challenge->Tags);
+        echo $this->html->paragraph($challenge->Description);
+
+        echo '<form method="post">';
+          echo $this->html->biginput('code');
+          echo $this->html->submit('Submit your code');
+        echo '</form>';
+
+      }
     }
   }
 }
