@@ -2,6 +2,7 @@
 
 require_once('html_controller.php');
 require_once('challenge_controller.php');
+require_once('user_controller.php');
 
 class PageController {
   function __construct($page) {
@@ -34,8 +35,24 @@ class PageController {
   function register() {
     echo $this->html->header('Rolla Coders: Challenges');
     
-    if (isset($_POST['fullname']) && isset($_POST['username']) && isset($_POST['password'])) {
+    if (isset($_POST['fullname']) && isset($_POST['username']) && isset($_POST['password']) &&
+        isset($_POST['confirm'])) {
+
+      $creator = new UserController();
+
       // Process registration
+      if ($_POST['password'] != $_POST['confirm']) {
+        echo $this->html->error("Passwords don't match!");
+        return;
+      }
+
+      if (!$creator->valid_username($_POST['username'])) {
+        echo $this->html->error("Username is taken!");
+        return;
+      }
+
+      // Create a user in the DB
+      $creator->create($_POST['fullname'], $_POST['username'], md5($_POST['password']));
 
     } else {
       echo $this->html->subheader('Register an account');

@@ -14,12 +14,16 @@ class HtmlController {
     return '<a href="' . $to . '">' . $text . '</a>';
   }
 
+  function error($text) {
+    return '<div>' . $text . '</div>';
+  }
+
   function input($text) {
-    return '<input type="text" name="' . $this->sanitize_for_name_tag($text) . '" value="' . $text . '" />';
+    return '<input type="text" name="' . $this->sanitize_for_name_tag($text) . '" value="" />';
   }
 
   function password($text) {
-    return '<input type="password" name="' . $this->sanitize_for_name_tag($text) . '" value="' . $text . '" />';
+    return '<input type="password" name="' . $this->sanitize_for_name_tag($text) . '" value="" />';
   }
 
   function submit($text) {
