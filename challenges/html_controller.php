@@ -42,6 +42,15 @@ class HtmlController {
     return str_replace(' ', '_', $text);
   }
 
+  function format_header($text) {
+    $words = split(' ', $text);
+    $header = '';
+    foreach ($words as $word) {
+      $header .= '<span class="big darkBrown">' . substr($word, 0, 1) . '</span>' . substr($word, 1) . ' ';
+    }
+    return $header;
+  }
+
 }
 
 ?>

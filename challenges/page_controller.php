@@ -5,36 +5,41 @@ require_once('challenge_controller.php');
 require_once('user_controller.php');
 
 class PageController {
-  function __construct($page) {
+  function __construct($page, &$template) {
     $this->html = new HtmlController();
-    $this->show($page);
+    $this->show($page, $template);
   }
 
   // Here be dragons
-  function show($page) {
+  function show($page, $template) {
+
     // If they've requested a page that actually exists:
     if (method_exists($this, $page)) {
-      $this->$page();
+      $this->token($template, $page . '_tab', 'here');
+      $this->$page($template);
     } else {
-      $this->home();
+      $this->token($template, 'home_tab', 'here');
+      $this->home($template);
     }
+
+    // Clean up any tokens that weren't already replaced
+    $this->default_tokens($template);
+
+    echo $template;
   }
 
-  function home() {
-    echo $this->html->header('Rolla Coders: Challenges');
+  function token(&$haystack, $token, $replacement) {
+    $haystack = str_replace('{{' . $token . '}}', $replacement, $haystack);
+  }
+
+  function home(&$template) {
     if ($logged_in) {
       // List all challenges for the user
-      $this->challenges();
-    } else {
-      // Offer register/login links before presenting challenges
-      echo $this->html->link('Click here to register', '?page=register');
-      echo $this->html->link('Click here to log in', '?page=login');
+      $this->challenges($template);
     }
   }
 
-  function register() {
-    echo $this->html->header('Rolla Coders: Challenges');
-    
+  function register(&$template) {
     if (isset($_POST['fullname']) && isset($_POST['username']) && isset($_POST['password']) &&
         isset($_POST['confirm'])) {
 
@@ -56,14 +61,15 @@ class PageController {
       $creator->create($_POST['fullname'], $_POST['username'], md5($_POST['password']));
 
     } else {
-      echo $this->html->subheader('Register an account');
-      echo '<form method="post">';
-        echo 'Full Name: ' . $this->html->input('fullname');
-        echo 'Username: ', $this->html->input('username');
-        echo 'Password: ', $this->html->password('password');
-        echo 'Confirm: ', $this->html->password('confirm');
-        echo $this->html->submit('Register');
-      echo '</form>';
+      $this->token($template, 'subheader', 'Register your account');
+      $this->token($template, 'content', implode(array(
+        '<form method="post">',
+          'Full Name: ' . $this->html->input('fullname'),
+          'Username: ', $this->html->input('username'),
+          'Password: ', $this->html->password('password'),
+          'Confirm: ', $this->html->password('confirm'),
+          $this->html->submit('Register'),
+        '</form>')));
     }
   }
 
@@ -126,6 +132,33 @@ class PageController {
 
       }
     }
+  }
+
+  function default_tokens(&$template) {
+    $this->token($template, 'header', $this->html->format_header('Programming Challenges'));+
+    $this->token($template, 'subheader', 'Provided by <span class="highlight">Rolla Coders</span>');
+
+    // Main page content
+    $this->token($template, 'content', "
+            <h1>Sponsors give us real-world challenges</h1>
+            <p>
+              Our awesome <span class=\"highlight\">sponsors</span> have helped us come up with programming challenges specific
+      to real world challenges they're facing. If you do well on a sponsored challenge, you could find yourself the recipient
+      of a job interview invitation.
+            </p>
+            <p>
+              Currently we have challenges sponsored by the following, great companies:
+            </p>
+            <ul>
+              <li><a href=\"http://www.rapportive.com\"><b>Rapportive</b></a> in San Francisco, CA
+              <li><a href=\"http://www.webmynd.com\"><b>WebMynd</b></a> in San Francisco, CA</li>
+              <li>...as well as tons of other challenges you put on your resume!</li>
+            </ul>
+            <h1>What is Rolla Coders?</h1>
+                  <p>
+                    <span class=\"highlight\">Rolla Coders</span> is derp derp awesome. This paragraph probably needs more words, or at 
+            least a link to the <a href=\"http://www.facebook.com/groups/rolla-coders\">Facebook page</a>.
+                  </p>");
   }
 }
 
