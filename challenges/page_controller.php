@@ -12,13 +12,12 @@ class PageController {
 
   // Here be dragons
   function show($page, $template) {
+    $this->token($template, $page . '_tab', 'here');
 
     // If they've requested a page that actually exists:
     if (method_exists($this, $page)) {
-      $this->token($template, $page . '_tab', 'here');
-      $this->$page($template);
+      $this->$page($template); // demons
     } else {
-      $this->token($template, 'home_tab', 'here');
       $this->home($template);
     }
 
@@ -73,17 +72,18 @@ class PageController {
     }
   }
 
-  function login() {
+  function login(&$template) {
     if (isset($_POST['username']) && isset($_POST['password'])) {
       // Process login
       
     } else {
-      echo $this->html->header('Log in');
-      echo '<form method="post">';
-        echo 'Username: ', $this->html->input('username');
-        echo 'Password: ', $this->html->password('password');
-        echo $this->html->submit('Log in');
-      echo '</form>';
+      $this->token($template, 'subheader', 'Log in');
+      $this->token($template, 'content', implode(array(
+        '<form method="post">',
+          'Username: ', $this->html->input('username'),
+          'Password: ', $this->html->password('password'),
+          $this->html->submit('Log in'),
+        '</form>')));
     }
   }
 
