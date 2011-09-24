@@ -28,12 +28,7 @@
     </div>
     <!-- #menu: topbar menu of the site.  Use the helper classes .two, .three, .four and .five to set
                 the widths for 2, 3, 4 and 5 item menus. -->
-    <ul id="menu" class="four">
-      <li><a href="?page=home" title="Home" class="{{home_tab}}"><span class="big">W</span>elcome</a></li>
-      <li><a href="?page=register" title="Register" class="{{register_tab}}"><span class="big">R</span>egister</a></li>
-      <li><a href="?page=challenges" title="Challenges" class="{{challenges_tab}}"><span class="big">C</span>hallenges</a></li>
-      <li><a href="?page=scoreboard" title="Scoreboard" class="{{scoreboard_tab}}"><span class="big">S</span>coreboard</a></li>
-    </ul>
+    {{menu}}
     <!-- #page: holds all page content, as well as footer -->
     <div id="page">
       {{content}}

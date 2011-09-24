@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $template = file_get_contents('templates/main.tpl');
 
 require_once 'page_controller.php';
