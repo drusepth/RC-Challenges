@@ -152,6 +152,7 @@ table {
   
   font-size: 1em;
   border-collapse: collapse;
+  overflow: hidden;
 }
 
 table caption {

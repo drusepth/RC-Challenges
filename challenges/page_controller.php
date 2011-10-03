@@ -210,22 +210,31 @@ class PageController {
             <h1>Sponsors give us real-world challenges</h1>
             <p>
               Our awesome <span class=\"highlight\">sponsors</span> have helped us come up with programming challenges specific
-      to real world challenges they're facing. If you do well on a sponsored challenge, you could find yourself the recipient
-      of a job interview invitation.
+      to real world challenges they're facing.
             </p>
-            <p>
+	    <p>We're currently chatting with some amazing companies to bring you the absolute best sponsors ever. :)</p>
+<!--            <p>
               Currently we have challenges sponsored by the following, great companies:
             </p>
             <ul>
               <li><a href=\"http://www.rapportive.com\"><b>Rapportive</b></a> in San Francisco, CA
               <li><a href=\"http://www.webmynd.com\"><b>WebMynd</b></a> in San Francisco, CA</li>
               <li>...as well as tons of other challenges you put on your resume!</li>
-            </ul>
-            <h1>What is Rolla Coders?</h1>
-                  <p>
-                    <span class=\"highlight\">Rolla Coders</span> is derp derp awesome. This paragraph probably needs more words, or at 
-            least a link to the <a href=\"http://www.facebook.com/groups/rolla-coders\">Facebook page</a>.
-                  </p>");
+-->            </ul>
+            <h1>You solve important problems</h1>
+            <p>
+		Not only will each challenge stress your problem-solving skills, but you'll learn more about the challenges the 
+		companies you like are facing. As you complete each challenge, you build up your personal profile, while <em>leveling up</em>
+		in the programming languages you use and the skills you employ.
+            </p>
+            <h1>Employer, meet potential employee</h1>
+            <p>
+		With each sponsored challenge you complete, you're bringing yourself closer and closer to meeting the employers you're
+		competing for. Whether this is for networking, an internship, a full-time position, or just for fun is really up to you.
+		You solved the employer's needs, and they're happy. Next up, you're happy.
+            </p>
+");
+
 
   }
 

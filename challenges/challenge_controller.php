@@ -35,17 +35,23 @@ class ChallengeController {
   function MakeTable($mysql_object) {
     $table = '<table>';
       $table .= '<tr><th colspan="4">Available Challenges</th></tr>';
-      while ($challenge = mysql_fetch_object($mysql_object)) {
+      while ($mysql_object && $challenge = mysql_fetch_object($mysql_object)) {
         $table .= '<tr>';
           $table .= '<td>' . $challenge->Difficulty . '</td>';
           $table .= '<td>' . $this->html->link($challenge->Name, '?page=challenge&id=' . $challenge->ID) . '</td>';
-          $table .= '<td>' . $challenge->Description . '</td>';
+          $table .= '<td>' . $this->truncate($challenge->Description, 100) . '</td>';
           $table .= '<td>' . $challenge->Tags . '</td>';
         $table .= '</tr>';
       }
     $table .= '</table>';
 
     return $table;
+  }
+
+  function truncate($text, $length) {
+    if (strlen($text) < $length) return $text;
+
+    return substr($text, 0, $length);
   }
 
   function MarkDone($challenge_id) {
@@ -62,6 +68,10 @@ class ChallengeController {
   function GetAllDoneBy($user_id) {
     return $this->dbc->query("SELECT * FROM `completions` WHERE `UserID` = '$user_id'");
   }
+
+  function GetAllDoneFor($challenge_id) {
+    return $this->dbc->query("SELECT * FROM `completions` WHERE `UserID` = '$user_id'");
+  }  
 
 }
 
